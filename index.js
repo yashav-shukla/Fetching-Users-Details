@@ -61,17 +61,23 @@ function handleFormSubmit(event) {
     const userList = document.querySelector("ul");
     userList.appendChild(userItem);
   
-    deleteBtn.addEventListener("click", function (event) {
-      userList.removeChild(event.target.parentElement);
-      localStorage.removeItem(userDetails.email);
+    deleteBtn.addEventListener("click", function () {
+        axios.delete(`${BASE_URL}/${userDetails._id}`)
+        .then(()=>{
+            userList.removeChild(userItem);
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
     });
   
     editBtn.addEventListener("click", function (event) {
-      userList.removeChild(event.target.parentElement);
-      localStorage.removeItem(userDetails.email);
+      userList.removeChild(userItem);
       document.getElementById("username").value = userDetails.username;
       document.getElementById("email").value = userDetails.email;
       document.getElementById("phone").value = userDetails.phone;
+
+      axios.delete(`${BASE_URL}/${userDetails._id}`);
     });
   }
   
